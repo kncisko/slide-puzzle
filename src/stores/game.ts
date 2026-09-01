@@ -13,6 +13,12 @@ export const useGameStore = defineStore('game', () => {
   const tiles = shallowRef<number[]>([])
   const imageDataUrl = shallowRef<string | null>(null)
   const moves = shallowRef(0)
+  const hapticsEnabled = shallowRef(localStorage.getItem('hapticsEnabled') !== 'false')
+
+  function toggleHaptics() {
+    hapticsEnabled.value = !hapticsEnabled.value
+    localStorage.setItem('hapticsEnabled', String(hapticsEnabled.value))
+  }
 
   const isSolved = computed(() => tiles.value.every((t, i) => t === i))
 
@@ -77,10 +83,12 @@ export const useGameStore = defineStore('game', () => {
     imageDataUrl,
     moves,
     isSolved,
+    hapticsEnabled,
     setImage,
     initBoard,
     shuffle,
     slideTile,
     blankIndex,
+    toggleHaptics,
   }
 })

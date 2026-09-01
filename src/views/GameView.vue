@@ -4,6 +4,19 @@
     <v-app-bar-title style="color: #1a1a2e;">Slide Puzzle</v-app-bar-title>
     <template #append>
       <v-btn icon="mdi-refresh" color="#1a1a2e" @click="gameStore.shuffle()" />
+      <v-menu location="bottom end">
+        <template #activator="{ props }">
+          <v-btn icon="mdi-menu" color="#1a1a2e" v-bind="props" />
+        </template>
+        <v-list density="compact" min-width="180">
+          <v-list-item @click="gameStore.toggleHaptics()">
+            <template #prepend>
+              <v-icon>{{ gameStore.hapticsEnabled ? 'mdi-vibrate' : 'mdi-vibrate-off' }}</v-icon>
+            </template>
+            <v-list-item-title>Haptics {{ gameStore.hapticsEnabled ? 'On' : 'Off' }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
   </v-app-bar>
 

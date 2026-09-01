@@ -177,7 +177,7 @@ function onTouchEnd(e: TouchEvent) {
   }
 
   gameStore.slideTile(targetPos)
-  Haptics.impact({ style: ImpactStyle.Light }).catch(() => {})
+  if (gameStore.hapticsEnabled) Haptics.impact({ style: ImpactStyle.Light }).catch(() => {})
 }
 </script>
 
