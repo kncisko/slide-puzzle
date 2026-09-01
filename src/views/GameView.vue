@@ -15,6 +15,12 @@
             </template>
             <v-list-item-title>Haptics {{ gameStore.hapticsEnabled ? 'On' : 'Off' }}</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="gameStore.setShowHelp(!gameStore.showHelp)">
+            <template #prepend>
+              <v-icon>{{ gameStore.showHelp ? 'mdi-eye-off' : 'mdi-eye' }}</v-icon>
+            </template>
+            <v-list-item-title>Numbers {{ gameStore.showHelp ? 'On' : 'Off' }}</v-list-item-title>
+          </v-list-item>
         </v-list>
       </v-menu>
     </template>

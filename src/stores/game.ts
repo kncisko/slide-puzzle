@@ -14,6 +14,9 @@ export const useGameStore = defineStore('game', () => {
   const imageDataUrl = shallowRef<string | null>(null)
   const moves = shallowRef(0)
   const hapticsEnabled = shallowRef(localStorage.getItem('hapticsEnabled') !== 'false')
+  const showHelp = shallowRef(false)
+
+  function setShowHelp(val: boolean) { showHelp.value = val }
 
   function toggleHaptics() {
     hapticsEnabled.value = !hapticsEnabled.value
@@ -84,6 +87,8 @@ export const useGameStore = defineStore('game', () => {
     moves,
     isSolved,
     hapticsEnabled,
+    showHelp,
+    setShowHelp,
     setImage,
     initBoard,
     shuffle,

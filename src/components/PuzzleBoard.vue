@@ -11,7 +11,9 @@
       :key="tileValue"
       class="puzzle-tile"
       :style="tileStyle(tileValue)"
-    />
+    >
+      <span v-if="gameStore.showHelp" class="tile-number">{{ tileValue + 1 }}</span>
+    </div>
   </div>
 </template>
 
@@ -200,5 +202,18 @@ function onTouchEnd(e: TouchEvent) {
   transition: transform 150ms ease-in-out;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
   box-sizing: border-box;
+}
+
+.tile-number {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  pointer-events: none;
 }
 </style>
