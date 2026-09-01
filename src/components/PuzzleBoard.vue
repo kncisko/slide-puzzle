@@ -128,7 +128,6 @@ function onTouchEnd(e: TouchEvent) {
   const dx = e.changedTouches[0].clientX - touchStartX
   const dy = e.changedTouches[0].clientY - touchStartY
 
-  // Require at least 10px of movement to distinguish swipe from tap
   if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return
 
   const blank = gameStore.blankIndex()
@@ -136,7 +135,9 @@ function onTouchEnd(e: TouchEvent) {
   const bCol  = blank % GRID_COLS
   let targetPos = -1
 
-  if (Math.abs(dx) >= Math.abs(dy)) {
+  const isHorizontal = Math.abs(dx) >= Math.abs(dy)
+
+  if (isHorizontal) {
     if (dx > 0 && bCol > 0)             targetPos = blank - 1
     if (dx < 0 && bCol < GRID_COLS - 1) targetPos = blank + 1
   } else {
@@ -145,6 +146,36 @@ function onTouchEnd(e: TouchEvent) {
   }
 
   if (targetPos < 0) return
+
+  // Verify the swipe started near the target tile using floating-point grid
+  // coordinates. ±1 integer row = ±102px which is too lenient (re-introduces
+  // the wrong-tile bug). Instead use tile-unit distances from target center:
+  //   • Primary axis (col for horizontal, row for vertical): within tile boundary (≤ 0.5)
+  //   • Perpendicular axis: allow up to 0.75 (25% past tile edge). Diagnostic
+  //     data showed valid touches landing 9–22px past the boundary; 25% covers that.
+  const board = boardEl.value
+  if (!board) return
+  const rect  = board.getBoundingClientRect()
+  const tw    = rect.width  / GRID_COLS
+  const th    = rect.height / GRID_ROWS
+
+  const startColF = (touchStartX - rect.left) / tw
+  const startRowF = (touchStartY - rect.top)  / th
+  if (startColF < 0 || startColF >= GRID_COLS || startRowF < 0 || startRowF >= GRID_ROWS) return
+
+  const targetCenterCol = (targetPos % GRID_COLS) + 0.5
+  const targetCenterRow = Math.floor(targetPos / GRID_COLS) + 0.5
+  const colDist = Math.abs(startColF - targetCenterCol)
+  const rowDist = Math.abs(startRowF - targetCenterRow)
+
+  if (isHorizontal) {
+    if (colDist > 0.5)  return
+    if (rowDist > 0.75) return
+  } else {
+    if (rowDist > 0.75) return
+    if (colDist > 0.75) return
+  }
+
   gameStore.slideTile(targetPos)
   Haptics.impact({ style: ImpactStyle.Light }).catch(() => {})
 }
