@@ -200,7 +200,7 @@ function onTouchEnd(e: TouchEvent) {
   touch-action: none;
   will-change: transform;
   transition: transform 150ms ease-in-out;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
   box-sizing: border-box;
 }
 
