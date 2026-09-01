@@ -6,12 +6,13 @@
         <p class="text-body-1 mb-8 text-medium-emphasis">
           Pick a photo from your gallery or take one with your camera.
         </p>
-        <div class="d-flex flex-column gap-4 align-center">
+        <div class="d-flex flex-column" style="gap: 10px; width: 100%;">
           <v-btn
             color="primary"
             size="x-large"
             rounded="pill"
             prepend-icon="mdi-image-multiple"
+            block
             :loading="loading"
             @click="pickSource('gallery')"
           >
@@ -22,6 +23,7 @@
             size="x-large"
             rounded="pill"
             prepend-icon="mdi-camera"
+            block
             :loading="loading"
             @click="pickSource('camera')"
           >

@@ -15,4 +15,8 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+.v-application {
+  background: linear-gradient(160deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
 </style>
