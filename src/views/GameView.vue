@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar density="compact" elevation="0">
-    <v-btn icon="mdi-arrow-left" @click="router.push('/')" />
-    <v-app-bar-title>Slide Puzzle</v-app-bar-title>
+  <v-app-bar density="compact" elevation="0" color="white">
+    <v-btn icon="mdi-arrow-left" color="#1a1a2e" @click="router.push('/')" />
+    <v-app-bar-title style="color: #1a1a2e;">Slide Puzzle</v-app-bar-title>
     <template #append>
-      <v-btn icon="mdi-refresh" @click="gameStore.shuffle()" />
+      <v-btn icon="mdi-refresh" color="#1a1a2e" @click="gameStore.shuffle()" />
     </template>
   </v-app-bar>
 
