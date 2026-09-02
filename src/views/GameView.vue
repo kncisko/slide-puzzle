@@ -67,11 +67,16 @@ import { computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useGameStore } from '@/stores/game'
 import PuzzleBoard from '@/components/PuzzleBoard.vue'
+import confetti from 'canvas-confetti'
 
 const router = useRouter()
 const gameStore = useGameStore()
 
 const showWin = computed(() => gameStore.isSolved && gameStore.moves > 0)
+
+function fireConfetti() {
+  confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } })
+}
 
 function playAgain() {
   gameStore.shuffle()
@@ -80,4 +85,8 @@ function playAgain() {
 watch(() => gameStore.imageDataUrl, (url) => {
   if (url) gameStore.initBoard()
 }, { immediate: true })
+
+watch(showWin, (won) => {
+  if (won) fireConfetti()
+})
 </script>
